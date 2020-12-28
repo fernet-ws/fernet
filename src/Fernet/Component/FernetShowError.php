@@ -15,7 +15,7 @@ class FernetShowError
     {
         // TODO Improve error show
         $dump = var_export($this->exception, true);
+
         return "<html><body><h1>Fernet - Error</h1><pre>$dump</pre></body></html>";
     }
 }
-

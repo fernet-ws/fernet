@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Fernet;
 
+use Exception;
+use Fernet\Component\FernetShowError;
 use Fernet\Core\ComponentElement;
 use Fernet\Core\Helper;
-use Fernet\Core\Router;
 use Fernet\Core\NotFoundException;
-use Fernet\Component\FernetShowError;
+use Fernet\Core\Router;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Exception;
 
 final class Framework
 {
@@ -37,20 +37,20 @@ final class Framework
 
     private function __construct(array $options)
     {
-        $this->container = new Container;
-        $this->container->delegate((new ReflectionContainer)->cacheResolutions());
+        $this->container = new Container();
+        $this->container->delegate((new ReflectionContainer())->cacheResolutions());
         $this->options = $options;
     }
 
-    public static function setUp($envPrefix = self::DEFAULT_ENV_PREFIX) : void
+    public static function setUp($envPrefix = self::DEFAULT_ENV_PREFIX): void
     {
         $options = static::DEFAULT_OPTIONS;
         foreach ($_ENV as $key => $value) {
-            if (strpos($key, $envPrefix) === 0) {
-                $key = substr($key, strlen($envPrefix));
+            if (0 === strpos($key, $envPrefix)) {
+                $key = substr($key, \strlen($envPrefix));
                 $key = Helper::camelCase($key);
-                $options[$key] = is_bool($options[$key]) ?
-                    filter_var($value, FILTER_VALIDATE_BOOLEAN):
+                $options[$key] = \is_bool($options[$key]) ?
+                    filter_var($value, FILTER_VALIDATE_BOOLEAN) :
                     $value;
             }
         }
@@ -59,15 +59,15 @@ final class Framework
 
     public static function __callStatic(string $name, array $arguments)
     {
-        return call_user_func_array([static::$instance, "_$name"], $arguments);
+        return \call_user_func_array([static::$instance, "_$name"], $arguments);
     }
 
-    public function _get(string $class) : object
+    public function _get(string $class): object
     {
         return $this->container->get($class);
     }
 
-    public function _getContainer() : Container
+    public function _getContainer(): Container
     {
         return $this->container;
     }
@@ -79,19 +79,21 @@ final class Framework
         }
     }
 
-    public function _setOption(string $option, $value) : self
+    public function _setOption(string $option, $value): self
     {
         $this->options[$option] = $value;
-        return $this;
-    }
-    
-    public function _addOption(string $option, $value) : self
-    {
-        $this->options[$option][] = $value;
+
         return $this;
     }
 
-    public function _run($component) : Response
+    public function _addOption(string $option, $value): self
+    {
+        $this->options[$option][] = $value;
+
+        return $this;
+    }
+
+    public function _run($component): Response
     {
         try {
             $request = Request::createFromGlobals();
@@ -116,14 +118,16 @@ final class Framework
             );
         }
         $response->prepare($request);
+
         return $response;
     }
 
-    private function _showError(Exception $e, $type = 'error500') : string
+    private function _showError(Exception $e, $type = 'error500'): string
     {
-        $element = $this->_getOption('devMode') ? 
-            new ComponentElement(FernetShowError::class, ['exception' => $e]):
+        $element = $this->_getOption('devMode') ?
+            new ComponentElement(FernetShowError::class, ['exception' => $e]) :
             new ComponentElement($this->_getOption($type));
+
         return $element->render();
     }
 }

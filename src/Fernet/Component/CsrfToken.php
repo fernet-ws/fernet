@@ -12,7 +12,7 @@ class CsrfToken
 
     public function __construct(AntiCSRF $csrf)
     {
-        $this->csrf  = $csrf;
+        $this->csrf = $csrf;
     }
 
     public function __toString()

@@ -4,7 +4,6 @@ namespace Fernet\Core;
 
 use Fernet\Framework;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class Router
 {
@@ -16,7 +15,7 @@ class Router
         $this->request = $request;
     }
 
-    public function route() 
+    public function route()
     {
         $prefix = Framework::getOption('urlPrefix');
         $regexp = "@^$prefix([^/]+)/(.+)/?$@";
@@ -25,23 +24,25 @@ class Router
             $method = Helper::camelCase($matches[2]);
             $component = new ComponentElement($class);
             $this->bind($component->getComponent());
+
             return $component->call($method, $this->getArgs());
         }
     }
 
-    private function getArgs() : array
+    private function getArgs(): array
     {
         $args = [$this->request];
         $params = $this->request->query->get('fernet-params', []);
         foreach ($params as $param) {
             $args[] = unserialize($param);
         }
+
         return $args;
     }
 
-    private function bind(object $component) : void
+    private function bind(object $component): void
     {
-        foreach($this->request->request->get('fernet-bind', []) as $key => $value) {
+        foreach ($this->request->request->get('fernet-bind', []) as $key => $value) {
             $var = &$component;
             foreach (explode('.', $key) as $attr) {
                 $var = &$var->$attr;

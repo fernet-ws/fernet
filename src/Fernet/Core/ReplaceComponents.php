@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Fernet\Core;
@@ -12,7 +13,7 @@ class ReplaceComponents
     const REGEX_ATTRIBUTE = '/(\w+)=(["\'])(.+)\2/s';
     const REGEX_ATTRIBUTE_WITH_OBJECT = '/(\w+)={(.+)}/s';
 
-    public function replace(string $content) : string
+    public function replace(string $content): string
     {
         $raws = [];
         $contents = [];
@@ -28,10 +29,11 @@ class ReplaceComponents
                 }
             }
         }
+
         return str_replace($raws, $contents, $content);
     }
-    
-    public function parseAttributes(string $raw) : array
+
+    public function parseAttributes(string $raw): array
     {
         $attributes = [];
         if (preg_match_all(static::REGEX_ATTRIBUTE, $raw, $matches)) {
@@ -44,6 +46,7 @@ class ReplaceComponents
                 $attributes[$key] = Params::get($matches[2][$i]);
             }
         }
+
         return $attributes;
     }
 }

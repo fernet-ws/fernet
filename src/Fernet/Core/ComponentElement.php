@@ -12,10 +12,10 @@ class ComponentElement
 
     private static int $counter = 0;
 
-    public function __construct($classOrObject, array $params = [], string $childContent = "")
+    public function __construct($classOrObject, array $params = [], string $childContent = '')
     {
-        $component = is_string($classOrObject) ?
-            $this->getObject($classOrObject):
+        $component = \is_string($classOrObject) ?
+            $this->getObject($classOrObject) :
             $classOrObject;
         foreach ($params as $key => $value) {
             $component->$key = $value;
@@ -36,7 +36,7 @@ class ComponentElement
         }
         $namespaces = Framework::getOption('componentNamespaces');
         foreach ($namespaces as $namespace) {
-            $classWithNamespace = $namespace . '\\' . $class;
+            $classWithNamespace = $namespace.'\\'.$class;
             if (class_exists($classWithNamespace)) {
                 return Framework::get($classWithNamespace);
             }
@@ -47,21 +47,23 @@ class ComponentElement
     public function call($method, $args)
     {
         if (!method_exists($this->component, $method)) {
-            throw new NotFoundException(sprintf('Method "%s" not found in component "%s"', $method, get_class($this->component)));
+            throw new NotFoundException(sprintf('Method "%s" not found in component "%s"', $method, \get_class($this->component)));
         }
-        return call_user_func_array([$this->component, $method], $args);
+
+        return \call_user_func_array([$this->component, $method], $args);
     }
 
-    public function render() : string
+    public function render(): string
     {
         $content = (string) $this->component;
-        $content = (new ReplaceComponents)->replace($content);
-        $content = (new ReplaceAttributes)->replace($content, $this->component);
+        $content = (new ReplaceComponents())->replace($content);
+        $content = (new ReplaceAttributes())->replace($content, $this->component);
         if (!Framework::getOption('enableJs')
             || (isset($this->component->preventWrapper)) && $this->component->preventWrapper) {
             return $content;
         }
         $id = static::$counter++;
+
         return "<div id=\"_fernet_component_$id\" class=\"_fernet_component\">$content</div>";
     }
 }
