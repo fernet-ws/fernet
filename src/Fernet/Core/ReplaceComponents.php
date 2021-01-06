@@ -8,17 +8,17 @@ use Fernet\Params;
 
 class ReplaceComponents
 {
-    const REGEX_TAG_WITH_CHILD = '/<([A-Z][\w0-9_\-]+)([^>]*)>(.+?)<\/\1>/s';
-    const REGEX_TAG = '/<([A-Z][\w0-9_\-]+)([^>]*)\/>/s';
-    const REGEX_ATTRIBUTE = '/(\w+)=(["\'])(.+)\2/s';
-    const REGEX_ATTRIBUTE_WITH_OBJECT = '/(\w+)={(.+)}/s';
+    private const REGEX_TAG_WITH_CHILD = '/<([A-Z][\w0-9_\-]+)([^>]*)>(.+?)<\/\1>/s';
+    private const REGEX_TAG = '/<([A-Z][\w0-9_\-]+)([^>]*)\/>/s';
+    private const REGEX_ATTRIBUTE = '/(\w+)=(["\'])(.+)\2/s';
+    private const REGEX_ATTRIBUTE_WITH_OBJECT = '/(\w+)={(.+)}/s';
 
     public function replace(string $content): string
     {
         $raws = [];
         $contents = [];
         // TODO prevent circular reference between components
-        // TODO throw error if there're components inside child content
+        // TODO throw error if there are components inside child content
         foreach ([static::REGEX_TAG, static::REGEX_TAG_WITH_CHILD] as $regexp) {
             if (preg_match_all($regexp, $content, $matches)) {
                 foreach ($matches[1] as $i => $tag) {

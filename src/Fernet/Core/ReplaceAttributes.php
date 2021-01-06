@@ -5,18 +5,19 @@ declare(strict_types=1);
 namespace Fernet\Core;
 
 use Fernet\Framework;
+use JsonException;
 
 class ReplaceAttributes
 {
-    const REGEX_FORM_SUBMIT = '/<form.*?(@(onSubmit)=(["\'])(.*?)\3)/';
-    const REGEX_A_ONCLICK = '/<a.*?(@(onClick)=(["\'])(.*?)\3)/';
-    const REGEX_BIND = '/<input.*?(@(bind)=(["\'])(.*?)\3)/';
+    private const REGEX_FORM_SUBMIT = '/<form.*?(@(onSubmit)=(["\'])(.*?)\3)/';
+    private const REGEX_A_ONCLICK = '/<a.*?(@(onClick)=(["\'])(.*?)\3)/';
+    private const REGEX_BIND = '/<input.*?(@(bind)=(["\'])(.*?)\3)/';
 
     public function replace(string $content, object $component): string
     {
         $class = \get_class($component);
         $classWithoutNamespace = $class;
-        $namespaces = Framework::getOption('componentNamespaces');
+        $namespaces = Framework::config('componentNamespaces');
         foreach ($namespaces as $namespace) {
             $classWithoutNamespace = str_replace($namespace.'\\', '', $classWithoutNamespace);
         }
@@ -34,9 +35,9 @@ class ReplaceAttributes
                     $definition = $matches[4][$i];
                     $args = false;
                     if (preg_match('/(.+)\((.*)\)$/', $definition, $match)) {
-                        list(, $definition, $args) = $match;
+                        [, $definition, $args] = $match;
                     }
-                    $url = Framework::getOption('urlPrefix').Helper::hyphen($classWithoutNamespace).'/'.Helper::hyphen($definition);
+                    $url = Framework::config('urlPrefix').Helper::hyphen($classWithoutNamespace).'/'.Helper::hyphen($definition);
                     if ($args) {
                         $url .= '?'.$args;
                     }
@@ -67,8 +68,13 @@ class ReplaceAttributes
 
     public function addJs($type, $class, $definition): string
     {
-        return Framework::getOption('enableJs') ?
-            " fernet-$type=".json_encode("$class.$definition") :
-            '';
+        try {
+            return Framework::config('enableJs') ?
+                " fernet-$type=" . json_encode("$class.$definition", JSON_THROW_ON_ERROR) :
+                '';
+        } catch (JsonException $e) {
+            Framework::getInstance()->getLog()->error("Error on converting \"$class.$definition\" to JSON");
+            return '';
+        }
     }
 }

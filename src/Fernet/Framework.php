@@ -4,20 +4,25 @@ declare(strict_types=1);
 
 namespace Fernet;
 
-use Exception;
 use Fernet\Component\FernetShowError;
 use Fernet\Core\ComponentElement;
+use Fernet\Core\Exception;
 use Fernet\Core\Helper;
 use Fernet\Core\NotFoundException;
 use Fernet\Core\Router;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
+use Fernet\Component\Error404;
+use Fernet\Component\Error500;
 
 final class Framework
 {
-    const DEFAULT_OPTIONS = [
+    private const DEFAULT_OPTIONS = [
         'devMode' => false,
         'enableJs' => true,
         'urlPrefix' => '/',
@@ -25,26 +30,46 @@ final class Framework
             'App\\Component',
             'Fernet\\Component',
         ],
-        'error404' => 'Fernet\\Component\\Error404',
-        'error500' => 'Fernet\\Component\\Error500',
+        'logPath' => 'php://stdout',
+        'logName' => 'fernet',
+        'logLevel' => Logger::INFO,
+        'error404' => Error404::class,
+        'error500' => Error500::class,
+        'rootPath' => '.',
     ];
-    const DEFAULT_ENV_PREFIX = 'FERNET_';
 
     private static self $instance;
 
+    /**
+     * Prefix used in env file
+     */
+    private const DEFAULT_ENV_PREFIX = 'FERNET_';
+
     private Container $container;
+    private Logger $log;
     private array $options;
+    private array $events = [
+        'onLoad' => [],
+        'onRequest' => [],
+        'onResponse' => [],
+        'onError' => [],
+    ];
 
     private function __construct(array $options)
     {
         $this->container = new Container();
         $this->container->delegate((new ReflectionContainer())->cacheResolutions());
         $this->options = $options;
+
+        $logger = new Logger($options['logName']);
+        $logger->pushHandler(new StreamHandler($options['logPath']), $options['logLevel']);
+        $this->container->add(Logger::class, $logger);
+        $this->log = $logger;
     }
 
-    public static function setUp($envPrefix = self::DEFAULT_ENV_PREFIX): void
+    public static function setUp(array $options = [], $envPrefix = self::DEFAULT_ENV_PREFIX): self
     {
-        $options = static::DEFAULT_OPTIONS;
+        $options = array_merge(self::DEFAULT_OPTIONS, $options);
         foreach ($_ENV as $key => $value) {
             if (0 === strpos($key, $envPrefix)) {
                 $key = substr($key, \strlen($envPrefix));
@@ -54,66 +79,97 @@ final class Framework
                     $value;
             }
         }
-        static::$instance = new self($options);
+        self::$instance = new self($options);
+        return self::$instance;
     }
 
-    public static function __callStatic(string $name, array $arguments)
+    public static function getInstance(): self
     {
-        return \call_user_func_array([static::$instance, "_$name"], $arguments);
+        if (!self::$instance) {
+            self::setUp();
+        }
+        return self::$instance;
     }
 
-    public function _get(string $class): object
+    public static function config(string $class)
     {
-        return $this->container->get($class);
+        return self::getInstance()->getOption($class);
     }
 
-    public function _getContainer(): Container
+    public static function subscribe(string $event, callable $callback): self
+    {
+        return self::getInstance()->observe($event, $callback);
+    }
+
+    public function getContainer(): Container
     {
         return $this->container;
     }
 
-    public function _getOption(string $option)
+    public function getOption(string $option)
     {
-        if (isset($this->options[$option])) {
-            return $this->options[$option];
+        if (!isset($this->options[$option])) {
+            throw new Exception("Undefined config \"$option\"");
         }
+        return $this->options[$option];
     }
 
-    public function _setOption(string $option, $value): self
+    public function setOption(string $option, $value): self
     {
         $this->options[$option] = $value;
 
         return $this;
     }
 
-    public function _addOption(string $option, $value): self
+    public function addOption(string $option, $value): self
     {
         $this->options[$option][] = $value;
 
         return $this;
     }
 
-    public function _run($component): Response
+    public function observe(string $event, callable $callback): self
     {
+        $this->events[$event][] = $callback;
+        return $this;
+    }
+
+    public function dispatch(string $event, array $args = []): void
+    {
+        foreach ($this->events[$event] as $position => $callback) {
+            $this->log->debug("Dispatch \"$event\" callback #$position");
+            \call_user_func_array($callback, $args);
+        }
+    }
+
+    public function run($component): Response
+    {
+        $request = null;
         try {
+            $this->dispatch('onLoad', [$this]);
             $request = Request::createFromGlobals();
+            $this->dispatch('onRequest', [$request]);
             $this->container->add(Request::class, $request);
-            $router = $this->_get(Router::class);
-            $response = $router->route();
-            if (!$response) {
-                $response = new Response(
-                    (new ComponentElement($component))->render(),
-                    Response::HTTP_OK
-                );
-            }
-        } catch (NotFoundException $e) {
+            /** @var Router $router */
+            $router = $this->container->get(Router::class);
+            $response = $router->route($component);
+            $this->dispatch('onResponse', [$response]);
+        } catch (NotFoundException $notFoundException) {
+            $this->log->notice("Route not found");
             return new Response(
-                $this->_showError($e, 'error404'),
+                $this->showError($notFoundException, 'error404'),
                 Response::HTTP_NOT_FOUND
             );
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
+            $this->log->error($exception->getMessage());
             $response = new Response(
-                $this->showError($e, 'error500'),
+                $this->showError($exception, 'error500'),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        } catch (Throwable $error) {
+            $this->log->error("An error or an exception was occurred", [$error]);
+            $response = new Response(
+                $this->showError($error, 'error500'),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -122,12 +178,18 @@ final class Framework
         return $response;
     }
 
-    private function _showError(Exception $e, $type = 'error500'): string
+    public function showError(Throwable $error, string $type): string
     {
-        $element = $this->_getOption('devMode') ?
-            new ComponentElement(FernetShowError::class, ['exception' => $e]) :
-            new ComponentElement($this->_getOption($type));
+        $this->dispatch('onError', [$error]);
+        $element = $this->getOption('devMode') ?
+            new ComponentElement(FernetShowError::class, ['error' => $error]) :
+            new ComponentElement($this->getOption($type));
 
         return $element->render();
+    }
+
+    public function getLog(): Logger
+    {
+        return $this->log;
     }
 }

@@ -1,25 +1,32 @@
 {
     "name": "pragmore/fernet",
-    "description": "Framework",
-    "type": "framework",
+    "description": "The Fernet Framework",
+    "type": "project",
     "require": {
-        "symfony/http-foundation": "^5.2",
-        "monolog/monolog": "^2.2",
-        "league/container": "^3.3",
-        "vlucas/phpdotenv": "^5.2",
+        "pragmore/fernet-core": "@dev",
         "paragonie/anti-csrf": "^2.3"
     },
-    "require-dev": {
-        "phpunit/phpunit": "^9.5"
-    },
     "autoload": {
-        "psr-4": {"Fernet\\": "src/Fernet"}
+        "App\\": "src"
     },
     "license": "MIT",
     "authors": [
         {
             "name": "Rodrigo 'Albo' Arce",
             "email": "albo@pragmore.com"
+        }
+    ],
+    "scripts": {
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+        ]
+    },
+    "repositories": [
+        {
+          "type": "path",
+          "url": "../fernet-core"
         }
     ]
 }

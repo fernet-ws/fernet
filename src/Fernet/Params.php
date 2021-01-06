@@ -6,29 +6,31 @@ namespace Fernet;
 
 class Params
 {
-    private static $objects = [];
+    /**
+     * @var array Objects are saving here so we can pass them as text
+     */
+    private static array $objects = [];
 
+    /**
+     * Prints the dynamic params passed to the component
+     *
+     * @param array $params
+     * @return string
+     */
     public static function component(array $params): string
     {
         $outputParams = [];
         foreach ($params as $key => $value) {
             $class = \get_class($value);
-            $id = static::add($class, $value);
-            $outputParams[] = "$key={{$id}}";
+            $name = static::set($class, $value);
+            $outputParams[] = "$key={{$name}}";
         }
-
         return implode(' ', $outputParams);
     }
 
-    public static function add(string $key, $value)
-    {
-        $position = \count(static::$objects);
-        $id = "$key#$position";
-        static::$objects[$id] = $value;
-
-        return $id;
-    }
-
+    /**
+     * Prints the dynamic values passed to the events
+     */
     public static function event(): string
     {
         $args = \func_get_args();
@@ -36,12 +38,21 @@ class Params
         foreach ($args as $arg) {
             $output[] = serialize($arg);
         }
-
         return htmlentities(http_build_query(['fernet-params' => $output]));
+    }
+
+    public static function set(string $key, $value): string
+    {
+        $position = \count(static::$objects);
+        $name = "$key#$position";
+        static::$objects[$name] = $value;
+
+        return $name;
     }
 
     public static function get(string $key)
     {
         return static::$objects[$key];
     }
+
 }
