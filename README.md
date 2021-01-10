@@ -31,32 +31,27 @@ class Hello
 
     public function __toString(): string
     {
-        return "<p>Hi <?= $this->name ?>!</p>";
+        return "<p>Hi {$this->name}!</p>";
     }
 }
 ```
-To use this new component go to the file src/Component/App.php and use it like a custom HTML tag.
+To use this new component go to the file **src/Component/App.php** and use it like a custom HTML tag.
 
 ```php
-<?php declare(strict_types=1);
-namespace App\Component;
-
-class App
-{
   // There are more code here, let's focus only on the toString method
   public function __toString(): string
   {
     \ob_start(); ?>
     <html lang="en">
         <body>
-            <p>Hey check this very original example</p>
+            <p>Check out this very original example</p>
             <Hello name="World" />
         </body>
     </html><?php    
     return \ob_get_clean();
   } 
-}
 ```
 
 The functions [ob_start](https://www.php.net/manual/en/function.ob-start.php) and [ob_get_clean](https://www.php.net/manual/en/function.ob-get-clean.php) are used to 
 get the printed code. We used this trick when we have a lot of HTML to render. Like many other things used in Fernet this is PHP native.
+The rest of course is old plain HTML.
