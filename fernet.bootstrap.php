@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__.'/vendor/autoload.php';
 
 session_start();
 
@@ -10,8 +10,8 @@ Fernet\Framework::setUp([
     'rootPath' => __DIR__,
 ]);
 
-use ParagonIE\AntiCSRF\AntiCSRF;
 use Fernet\Framework;
+use ParagonIE\AntiCSRF\AntiCSRF;
 
 Framework::subscribe('onLoad', function (Framework $framework) {
     $antiServer = $_SERVER;

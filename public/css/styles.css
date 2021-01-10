@@ -1,13 +1,17 @@
 body{
-    overflow-x: hidden;
+  overflow-x: hidden;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 1.2em;
+  line-height: 1.5em;
+  display: flex;
+  align-items: center;
+  max-width: 800px;
+  margin: 45px auto;
+  color: #365094;
 }
-
-h1 a{
-    text-decoration: none;
-}
-section {
-    padding: 1em 0;
-}
+h1, strong { color: #706A6A; }
+img { margin: 25px }
+.main { align-content: stretch }
 
 /* Ribbon generated in https://www.cssportal.com/css-ribbon-generator/ */
 .ribbon {
@@ -37,7 +41,7 @@ section {
 }
 .ribbon span::before {
   content: "";
-  position: absolute; left: 0px; top: 100%;
+  position: absolute; left: 0; top: 100%;
   z-index: -1;
   border-left: 3px solid #79A70A;
   border-right: 3px solid transparent;
@@ -46,7 +50,7 @@ section {
 }
 .ribbon span::after {
   content: "";
-  position: absolute; right: 0px; top: 100%;
+  position: absolute; right: 0; top: 100%;
   z-index: -1;
   border-left: 3px solid transparent;
   border-right: 3px solid #79A70A;
