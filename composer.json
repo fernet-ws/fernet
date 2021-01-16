@@ -5,6 +5,10 @@
     "require": {
         "fernet/framework": "^0.1",
         "paragonie/anti-csrf": "^2.3"
+    }
+    ,
+    "require-dev": {
+        "roave/security-advisories": "dev-master"
     },
     "autoload": {
         "psr-4": {
