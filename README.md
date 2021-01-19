@@ -1,4 +1,4 @@
-# fernet
+# Fernet
 A component based PHP Framework
 
 ## Set up

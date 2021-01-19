@@ -15,20 +15,15 @@ class App
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="/css/styles.css">
     <title>Fernet</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="/css/styles.css">
+    <FernetFavicon />
+    <FernetStylesheet />
   </head>
-  <body>
-    <div class="ribbon"><span>BETA</span></div>
+  <body class="welcome">
+    <Ribbon>BETA</Ribbon>
     <h1>Fernet</h1>
-    <img src="logo.png" alt="fernet framework logo" />
+    <FernetLogo />
     <div class="main">
         <p>Congrats! You have successful installed <strong>Fernet</strong>, the component based php framework.</p>
         <h3>You can write your <em>components</em> now</h3>

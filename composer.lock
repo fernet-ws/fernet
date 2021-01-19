@@ -4,21 +4,15 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9df2b497eb62ee3d92390eb67b06059a",
+    "content-hash": "45f37a372449e46ac442c883ff2ba44f",
     "packages": [
         {
             "name": "fernet/framework",
-            "version": "v0.1.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pragmore/fernet-core.git",
-                "reference": "4dea34d37b87010deda2df5ce0a630b53aded6bf"
-            },
+            "version": "dev-main",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pragmore/fernet-core/zipball/4dea34d37b87010deda2df5ce0a630b53aded6bf",
-                "reference": "4dea34d37b87010deda2df5ce0a630b53aded6bf",
-                "shasum": ""
+                "type": "path",
+                "url": "../fernet-core",
+                "reference": "9caf59a3dc5572d528d3d04f55a2b5e96473286b"
             },
             "require": {
                 "ext-json": "*",
@@ -40,7 +34,11 @@
                     "Fernet\\": "src/Fernet"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Fernet\\Tests\\": "tests/Fernet/Tests"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -54,11 +52,9 @@
             "keywords": [
                 "framework"
             ],
-            "support": {
-                "issues": "https://github.com/pragmore/fernet-core/issues",
-                "source": "https://github.com/pragmore/fernet-core/tree/v0.1.4"
-            },
-            "time": "2021-01-18T01:40:21+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "graham-campbell/result-type",
@@ -986,7 +982,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "fernet/framework": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

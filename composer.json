@@ -11,9 +11,14 @@
         }
     ],
     "require": {
-        "fernet/framework": "^0.1"
-    }
-    ,
+        "fernet/framework": "@dev"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../fernet-core"
+        }
+    ],
     "require-dev": {
     },
     "autoload": {
