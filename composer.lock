@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "fernet/framework",
-            "version": "v0.1.6",
+            "version": "v0.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pragmore/fernet-core.git",
-                "reference": "0b4ba84deb4846cdc5fd379e9f14c10a98500219"
+                "reference": "2ae043235f371b4ae804b97e065192af1d089509"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pragmore/fernet-core/zipball/0b4ba84deb4846cdc5fd379e9f14c10a98500219",
-                "reference": "0b4ba84deb4846cdc5fd379e9f14c10a98500219",
+                "url": "https://api.github.com/repos/pragmore/fernet-core/zipball/2ae043235f371b4ae804b97e065192af1d089509",
+                "reference": "2ae043235f371b4ae804b97e065192af1d089509",
                 "shasum": ""
             },
             "require": {
@@ -31,6 +31,7 @@
                 "vlucas/phpdotenv": "^5.2"
             },
             "require-dev": {
+                "behat/behat": "^3.8",
                 "phpunit/phpunit": "^9.5",
                 "roave/security-advisories": "dev-master"
             },
@@ -56,9 +57,9 @@
             ],
             "support": {
                 "issues": "https://github.com/pragmore/fernet-core/issues",
-                "source": "https://github.com/pragmore/fernet-core/tree/v0.1.6"
+                "source": "https://github.com/pragmore/fernet-core/tree/v0.1.7"
             },
-            "time": "2021-01-18T04:02:55+00:00"
+            "time": "2021-01-22T04:32:00+00:00"
         },
         {
             "name": "graham-campbell/result-type",
