@@ -1,4 +1,15 @@
-# Fernet
+<h1 align="center">Fernet</h1>
+<p align="center">
+    <a href="https://packagist.org/packages/fernet/fernet">
+        <img src="https://img.shields.io/packagist/dt/fernet/fernet" alt="Total Downloads">
+    </a>
+    <a href="https://packagist.org/packages/laravel/sail">
+        <img src="https://img.shields.io/packagist/v/fernet/fernet" alt="Latest Stable Version">
+    </a>
+    <a href="https://packagist.org/packages/laravel/sail">
+        <img src="https://img.shields.io/github/license/pragmore/fernet" alt="License">
+    </a>
+</p>
 A component based PHP Framework
 
 ## Set up
