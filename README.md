@@ -3,10 +3,10 @@
     <a href="https://packagist.org/packages/fernet/fernet">
         <img src="https://img.shields.io/packagist/dt/fernet/fernet" alt="Total Downloads">
     </a>
-    <a href="https://packagist.org/packages/laravel/sail">
+    <a href="https://packagist.org/packages/fernet/fernet">
         <img src="https://img.shields.io/packagist/v/fernet/fernet" alt="Latest Stable Version">
     </a>
-    <a href="https://packagist.org/packages/laravel/sail">
+    <a href="https://packagist.org/packages/fernet/fernet">
         <img src="https://img.shields.io/github/license/pragmore/fernet" alt="License">
     </a>
 </p>
