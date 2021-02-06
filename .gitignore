@@ -2,3 +2,6 @@
 .idea/
 vendor/
 .env
+
+# This file is created by the plugin
+cli-config.php
