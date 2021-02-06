@@ -6,4 +6,4 @@ use Doctrine\ORM\EntityManager;
 use Fernet\Framework;
 
 $entityManager = Framework::getInstance()->getContainer()->get(EntityManager::class);
-return ConsoleRunner::createHelperSet($entityManager);
+ConsoleRunner::createHelperSet($entityManager);
