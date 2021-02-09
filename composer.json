@@ -11,8 +11,12 @@
         }
     ],
     "require": {
-        "fernet/framework": "0.1.*",
-        "fernet/doctrine": "^0.1.0"
+        "fernet/framework": "^0.2",
+        "fernet/doctrine": "^0.2"
+    },
+    "require-dev": {
+        "morrislaptop/popo-factory": "^0.2.0",
+        "phpdocumentor/reflection-docblock": "^5.2"
     },
     "autoload": {
         "psr-4": {

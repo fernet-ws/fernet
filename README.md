@@ -9,6 +9,9 @@
     <a href="https://packagist.org/packages/fernet/fernet">
         <img src="https://img.shields.io/github/license/pragmore/fernet" alt="License">
     </a>
+    <a href="https://www.travis-ci.com/pragmore/fernet-core">
+        <img src="https://www.travis-ci.com/pragmore/fernet-core.svg?branch=main" alt="Total Downloads">
+    </a>
 </p>
 A component based PHP Framework
 
