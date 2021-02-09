@@ -1,16 +1,22 @@
 <h1 align="center">Fernet</h1>
 <p align="center">
     <a href="https://packagist.org/packages/fernet/fernet">
-        <img src="https://img.shields.io/packagist/dt/fernet/fernet" alt="Total Downloads">
-    </a>
-    <a href="https://packagist.org/packages/fernet/fernet">
         <img src="https://img.shields.io/packagist/v/fernet/fernet" alt="Latest Stable Version">
     </a>
-    <a href="https://packagist.org/packages/fernet/fernet">
-        <img src="https://img.shields.io/github/license/pragmore/fernet" alt="License">
+    <a href="https://www.travis-ci.com/pragmore/fernet-core">
+        <img src="https://www.travis-ci.com/pragmore/fernet-core.svg?branch=main" alt="Total Downloads">
+    </a>
+    <a href='https://coveralls.io/github/pragmore/fernet-core?branch=main'>
+        <img src='https://coveralls.io/repos/github/pragmore/fernet-core/badge.svg?branch=main' alt='Coverage Status' />
+    </a>
+    <a href='https://fernet.readthedocs.io/en/latest/?badge=latest'>
+        <img src='https://readthedocs.org/projects/fernet/badge/?version=latest' alt='Documentation Status' />
     </a>
 </p>
-A component based PHP Framework
+
+A component based PHP Framework.
+
+[Read the full documentation](https://fernet.readthedocs.io).
 
 ## Set up
 
