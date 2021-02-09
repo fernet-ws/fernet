@@ -1,4 +1,0 @@
-{
-    "/some/route": "SomeComponent.handleMethod",
-    "/user/{$id}": "UserComponent.handleShowUser"
-}

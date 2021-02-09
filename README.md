@@ -12,6 +12,9 @@
     <a href='https://fernet.readthedocs.io/en/latest/?badge=latest'>
         <img src='https://readthedocs.org/projects/fernet/badge/?version=latest' alt='Documentation Status' />
     </a>
+    <a href="https://www.travis-ci.com/pragmore/fernet-core">
+        <img src="https://www.travis-ci.com/pragmore/fernet-core.svg?branch=main" alt="Total Downloads">
+    </a>
 </p>
 
 A component based PHP Framework.

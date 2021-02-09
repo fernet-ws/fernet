@@ -5,9 +5,6 @@ namespace App\Component;
 
 class App
 {
-    /* Component configuration */
-    public bool $preventWrapper = true;
-
     public function __toString(): string
     {
         ob_start(); ?><!doctype html>
@@ -30,7 +27,7 @@ class App
         <p>Don't know what <em>components</em> are? Read the <a href="https://github.com/pragmore/fernet" target="_blank" role="button">documentation</a>.</p>
         <p>You can also start <a href="subl://<?php echo __FILE__; ?>">editing this file</a>.</p>
     </div>
-    <FernetClientScript />
+    <script src="js/app.js"></script>
   </body>
 </html><?php
     return ob_get_clean();
