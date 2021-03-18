@@ -3,5 +3,10 @@
 vendor/
 .env
 
+node_modules/
+# Uncomment if you use npm
+# public/js/
+# public/css/styles.css
+
 # This file is created by the plugin
 cli-config.php
