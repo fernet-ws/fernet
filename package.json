@@ -1,6 +1,6 @@
 {
   "name": "@pragmore/fernet",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "npm package for the PHP Framework Fernet",
   "keywords": [
     "sass",
@@ -26,7 +26,7 @@
     "js-build": "babel app --out-dir public/js",
     "js-watch": "npm run js-build -- --watch",
     "deploy": "npm run css-build && npm run js-build",
-    "server": "php -S 127.0.0.1:15123 -t public",
+    "server": "FSH=127.0.0.1:$(((RANDOM % 200) + 15000)) && xdg-open http://$FSH && php -S $FSH -t public",
     "start": "npm-run-all --parallel css-watch js-watch server"
   }
 }
