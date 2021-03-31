@@ -11,8 +11,8 @@
         }
     ],
     "require": {
-        "fernet/framework": "^0.2",
-        "fernet/doctrine": "^0.2"
+        "fernet/framework": "0.x-dev",
+        "fernet/doctrine": "0.*"
     },
     "require-dev": {
         "morrislaptop/popo-factory": "^0.2.0",
@@ -29,5 +29,7 @@
         ],
         "post-create-project-cmd": [
         ]
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
