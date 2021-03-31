@@ -18,7 +18,7 @@ class App
     <FernetStylesheet />
   </head>
   <body class="welcome">
-    <Ribbon>BETA</Ribbon>
+    <div class="ribbon"><span>BETA</span></div>
     <h1>Fernet</h1>
     <FernetLogo />
     <div class="main">
@@ -28,6 +28,7 @@ class App
         <p>You can also start <a href="subl://<?php echo __FILE__; ?>">editing this file</a>.</p>
     </div>
     <script src="js/app.js"></script>
+    <LiveReload />
   </body>
 </html><?php
     return ob_get_clean();

@@ -1,1 +1,2 @@
-// Add your JS here!
+// Write this JS and use babel to compile it!
+"use strict";
