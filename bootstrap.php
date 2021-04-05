@@ -8,6 +8,8 @@ Fernet\Framework::setUp([
     'rootPath' => __DIR__,
 ]);
 
-$faker = \Faker\Factory::create($_ENV['FAKER_LANG']);
-$faker->seed($_ENV['FAKER_SEED']);
+$faker = \Faker\Factory::create($_ENV['FAKER_LANG'] ?? 'en_US');
+if (isset($_ENV['FAKER_SEED'])) {
+    $faker->seed($_ENV['FAKER_SEED']);
+}
 Fernet\Framework::getInstance()->getContainer()->add($faker::class, $faker);

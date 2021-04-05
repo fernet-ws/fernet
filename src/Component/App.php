@@ -3,8 +3,17 @@ declare(strict_types=1);
 
 namespace App\Component;
 
+use Faker\Generator as Faker;
+
 class App
 {
+    private string $name;
+
+    public function __construct(Faker $faker) 
+    {
+        $this->name = $faker->firstName();
+    }
+
     public function __toString(): string
     {
         ob_start(); ?><!doctype html>
@@ -22,7 +31,7 @@ class App
     <h1>Fernet</h1>
     <FernetLogo />
     <div class="main">
-        <p>Congrats! You have successful installed <strong>Fernet</strong>, the component based php framework.</p>
+    <p>Hello <?= $this->name ?>! You have successful installed <strong>Fernet</strong>, the component based php framework.</p>
         <h3>You can write your <em>components</em> now</h3>
         <p>Don't know what <em>components</em> are? Read the <a href="https://github.com/pragmore/fernet" target="_blank" role="button">documentation</a>.</p>
         <p>You can also start <a href="subl://<?php echo __FILE__; ?>">editing this file</a>.</p>
