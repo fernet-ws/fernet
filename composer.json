@@ -1,6 +1,7 @@
 {
     "name": "fernet/fernet",
     "description": "The Fernet Framework",
+    "homepage": "https://fernet.ws",
     "type": "project",
     "keywords": ["framework"],
     "license": "MIT",
@@ -11,12 +12,9 @@
         }
     ],
     "require": {
-        "fernet/framework": "0.x-dev",
-        "fernet/doctrine": "0.*"
-    },
-    "require-dev": {
-        "morrislaptop/popo-factory": "^0.2.0",
-        "phpdocumentor/reflection-docblock": "^5.2"
+        "fernet/framework": "^0.3",
+        "fernet/doctrine": "^0.3",
+        "fakerphp/faker": "^1.14"
     },
     "autoload": {
         "psr-4": {
