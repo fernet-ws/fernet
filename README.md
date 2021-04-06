@@ -3,11 +3,11 @@
     <a href="https://packagist.org/packages/fernet/fernet">
         <img src="https://img.shields.io/packagist/v/fernet/fernet" alt="Latest Stable Version">
     </a>
-    <a href="https://www.travis-ci.com/pragmore/fernet-core">
-        <img src="https://www.travis-ci.com/pragmore/fernet-core.svg?branch=main" alt="Build Status">
+    <a href="https://www.travis-ci.com/fernet-ws/framework">
+        <img src="https://www.travis-ci.com/fernet-ws/framework.svg?branch=main" alt="Build Status">
     </a>
-    <a href='https://coveralls.io/github/pragmore/fernet-core?branch=main'>
-        <img src='https://coveralls.io/repos/github/pragmore/fernet-core/badge.svg?branch=main' alt='Coverage Status' />
+    <a href='https://coveralls.io/github/fernet-ws/framework?branch=main'>
+        <img src='https://coveralls.io/repos/github/fernet-ws/framework/badge.svg?branch=main' alt='Coverage Status' />
     </a>
     <a href='https://fernet.readthedocs.io/en/latest/?badge=latest'>
         <img src='https://readthedocs.org/projects/fernet/badge/?version=latest' alt='Documentation Status' />
