@@ -7,6 +7,7 @@ var _this = void 0;
 /* eslint eqeqeq: "off" */
 (function () {
   var replace = function replace(target, url) {
+    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
     var waitToHide = 300;
     var animate = setTimeout(function () {
       target.classList.add('__fernet_skeleton');
@@ -22,9 +23,8 @@ var _this = void 0;
     };
 
     target.addEventListener('click', preventClicking);
-    var options = {
-      method: 'PUT',
-      body: 'fernet_replace'
+    options.headers = {
+      'X-Fernet-Js': 1
     };
     fetch(url, options).then(function (response) {
       return response.text();
@@ -35,7 +35,6 @@ var _this = void 0;
       target.classList.remove('__fernet_skeleton');
     })["catch"](function (err) {
       console.error(err);
-      window.location.href = url;
     });
   };
 
@@ -45,20 +44,35 @@ var _this = void 0;
       for (var target = event.target; target && target != _this; target = target.parentNode) {
         if (target.matches && target.matches('a')) {
           if (target.href.match(/__fe/)) {
-            replace(target.closest('.__fw'), target.href);
             event.preventDefault();
+            replace(target.closest('.__fw'), target.href);
           }
 
           if (routerElement && target.classList.contains('__fl')) {
-            document.querySelector('.active.__fl').classList.remove('active');
-            target.classList.add('active');
+            var _document$querySelect;
+
+            event.preventDefault();
+            var activeClass = target.dataset.activeClass;
+            (_document$querySelect = document.querySelector('.__fl.' + activeClass)) === null || _document$querySelect === void 0 ? void 0 : _document$querySelect.classList.remove(activeClass);
+            target.classList.add(activeClass);
             replace(routerElement, target.href);
             history.pushState({
               link: target.innerHTML
             }, target.innerHTML, target.href);
             target.blur();
-            event.preventDefault();
           }
+        }
+      }
+    });
+    document.addEventListener('submit', function (event) {
+      for (var target = event.target; target && target !== _this; target = target.parentNode) {
+        if (target.matches && target.matches('form')) {
+          event.preventDefault();
+          var options = {
+            method: target.method,
+            body: new FormData(target)
+          };
+          replace(target.closest('.__fw'), target.action, options);
         }
       }
     });

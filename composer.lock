@@ -1174,19 +1174,20 @@
         },
         {
             "name": "fernet/framework",
-            "version": "v0.3.1",
+            "version": "v0.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fernet-ws/framework.git",
-                "reference": "583d056e0993cca0d0c17924387fd5e77826ec4c"
+                "reference": "735cbccf9a0493fa58b59b5159f7cb52bb7a21cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fernet-ws/framework/zipball/583d056e0993cca0d0c17924387fd5e77826ec4c",
-                "reference": "583d056e0993cca0d0c17924387fd5e77826ec4c",
+                "url": "https://api.github.com/repos/fernet-ws/framework/zipball/735cbccf9a0493fa58b59b5159f7cb52bb7a21cb",
+                "reference": "735cbccf9a0493fa58b59b5159f7cb52bb7a21cb",
                 "shasum": ""
             },
             "require": {
+                "doctrine/cache": "^1.10",
                 "ext-json": "*",
                 "ext-mbstring": "*",
                 "filp/whoops": "^2.12",
@@ -1197,6 +1198,7 @@
                 "symfony/browser-kit": "^5.2",
                 "symfony/css-selector": "^5.2",
                 "symfony/http-foundation": "^5.2",
+                "symfony/yaml": "^5.2",
                 "vlucas/phpdotenv": "^5.2"
             },
             "require-dev": {
@@ -1231,22 +1233,22 @@
             ],
             "support": {
                 "issues": "https://github.com/fernet-ws/framework/issues",
-                "source": "https://github.com/fernet-ws/framework/tree/v0.3.1"
+                "source": "https://github.com/fernet-ws/framework/tree/v0.3.2"
             },
-            "time": "2021-04-23T04:36:47+00:00"
+            "time": "2021-04-26T07:38:58+00:00"
         },
         {
             "name": "filp/whoops",
-            "version": "2.12.0",
+            "version": "2.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "d501fd2658d55491a2295ff600ae5978eaad7403"
+                "reference": "c13c0be93cff50f88bbd70827d993026821914dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/d501fd2658d55491a2295ff600ae5978eaad7403",
-                "reference": "d501fd2658d55491a2295ff600ae5978eaad7403",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/c13c0be93cff50f88bbd70827d993026821914dd",
+                "reference": "c13c0be93cff50f88bbd70827d993026821914dd",
                 "shasum": ""
             },
             "require": {
@@ -1296,7 +1298,7 @@
             ],
             "support": {
                 "issues": "https://github.com/filp/whoops/issues",
-                "source": "https://github.com/filp/whoops/tree/2.12.0"
+                "source": "https://github.com/filp/whoops/tree/2.12.1"
             },
             "funding": [
                 {
@@ -1304,7 +1306,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-03-30T12:00:00+00:00"
+            "time": "2021-04-25T12:00:00+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -2858,6 +2860,81 @@
                 }
             ],
             "time": "2021-03-17T17:12:15+00:00"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "v5.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "298a08ddda623485208506fcee08817807a251dd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/298a08ddda623485208506fcee08817807a251dd",
+                "reference": "298a08ddda623485208506fcee08817807a251dd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.5",
+                "symfony/deprecation-contracts": "^2.1",
+                "symfony/polyfill-ctype": "~1.8"
+            },
+            "conflict": {
+                "symfony/console": "<4.4"
+            },
+            "require-dev": {
+                "symfony/console": "^4.4|^5.0"
+            },
+            "suggest": {
+                "symfony/console": "For validating YAML files using the lint command"
+            },
+            "bin": [
+                "Resources/bin/yaml-lint"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Yaml\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Loads and dumps YAML files",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/yaml/tree/v5.2.5"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-03-06T07:59:01+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

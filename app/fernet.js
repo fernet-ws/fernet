@@ -1,7 +1,7 @@
 /* eslint-env browser */
 /* eslint eqeqeq: "off" */
 (() => {
-  const replace = (target, url) => {
+  const replace = (target, url, options = {}) => {
     const waitToHide = 300
     const animate = setTimeout(() => {
       target.classList.add('__fernet_skeleton')
@@ -15,11 +15,7 @@
       event.stopPropagation()
     }
     target.addEventListener('click', preventClicking)
-
-    const options = {
-      method: 'PUT',
-      body: 'fernet_replace'
-    }
+    options.headers = {'X-Fernet-Js':  1}
     fetch(url, options)
       .then(response => response.text())
       .then(html => {
@@ -30,7 +26,6 @@
       })
       .catch(err => {
         console.error(err)
-        window.location.href = url
       })
   }
 
@@ -40,17 +35,30 @@
       for (let target = event.target; target && target != this; target = target.parentNode) {
         if (target.matches && target.matches('a')) {
           if (target.href.match(/__fe/)) {
-            replace(target.closest('.__fw'), target.href)
             event.preventDefault()
+            replace(target.closest('.__fw'), target.href)
           }
           if (routerElement && target.classList.contains('__fl')) {
-            document.querySelector('.active.__fl').classList.remove('active')
-            target.classList.add('active')
+            event.preventDefault()
+            let activeClass = target.dataset.activeClass
+            document.querySelector('.__fl.' + activeClass)?.classList.remove(activeClass)
+            target.classList.add(activeClass)
             replace(routerElement, target.href)
             history.pushState({ link: target.innerHTML }, target.innerHTML, target.href)
             target.blur()
-            event.preventDefault()
           }
+        }
+      }
+    })
+    document.addEventListener('submit', event => {
+      for (let target = event.target; target && target !== this; target = target.parentNode) {
+        if (target.matches && target.matches('form')) {
+          event.preventDefault()
+          let options = {
+            method: target.method,
+            body: new FormData(target)
+          }
+          replace(target.closest('.__fw'), target.action, options)
         }
       }
     })

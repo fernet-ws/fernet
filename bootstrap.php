@@ -29,5 +29,4 @@ $faker = Factory::create($_ENV['FAKER_LANG'] ?? 'en_US');
 if (isset($_ENV['FAKER_SEED'])) {
     $faker->seed($_ENV['FAKER_SEED']);
 }
-Fernet\Framework::getInstance()->getContainer()->add($faker::class, $faker);
-
+Framework::getInstance()->getContainer()->add($faker::class, $faker);

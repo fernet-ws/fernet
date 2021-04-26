@@ -30,6 +30,7 @@ class App
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Welcome to Fernet</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <FernetStylesheet />
 
     <?php /* For a clean start delete this */ ?>
     <FernetFavicon />
