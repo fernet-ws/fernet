@@ -1,0 +1,11 @@
+# Fernet config file
+#
+# routing:
+#   "/some-path/": SomePageComponent
+#   "/another/{value}": AnotherComponent.method
+
+plugins:
+  - "fernet/doctrine" 
+
+faker:
+  lang: en
