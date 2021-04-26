@@ -22,12 +22,19 @@
         }
     },
     "scripts": {
-        "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
-        "post-update-cmd": [
+        "installPlugins": [
             "@putenv FERNET_SETUP_PLUGINS=1",
             "@php bootstrap.php"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@installPlugins"
+        ],
+        "post-install-cmd": [
+            "@installPlugins"
+        ],
+        "post-update-cmd": [
+            "@installPlugins"
         ]
     },
     "minimum-stability": "dev",
